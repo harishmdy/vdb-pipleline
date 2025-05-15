@@ -1,0 +1,75 @@
+{
+    "_source": [
+        "title",
+        "raw_body",
+        "url",
+        "description",
+        "entitled",
+        "language",
+        "dcdate",
+        "ibmentitlement",
+        "dcc",
+        "field_keyword_01",
+        "adopter_specific",
+        "mhscope",
+        "scope",
+        "internal_only",
+        "latest_version",
+        "semver_tags",
+        "altver_tags",
+        "mtm_tags"
+    ],
+    "query": {
+        "bool": {
+            "filter": [
+                {
+                    "bool": {
+                        "must_not": [
+                            {
+                                "term": {
+                                    "entitled": 1
+                                }
+                            },
+                            {
+                                "term": {
+                                    "internal_only": true
+                                }
+                            }
+                        ],
+                        "must": [
+                            {
+                                "bool": {
+                                    "should": [
+                                        {
+                                            "term": {
+                                                "language": "zz"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "language": "en"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "term": {
+                                    "latest_version": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            "should": [
+                {
+                    "term": {
+                        "scope": "ibmdocs"
+                    }
+                }
+            ],
+            "minimum_should_match": 1
+        }
+    }
+}
